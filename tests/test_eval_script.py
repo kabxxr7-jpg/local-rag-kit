@@ -53,9 +53,12 @@ def test_run_scores_hits_answers_and_refusals(run_eval, tmp_path):
     assert h["hit_at_k"] == any((s, p) == ("harbor-pine-handbook.pdf", 2) for s, p, _ in h["retrieved"])
     assert h["hit_at_1"] == (h["retrieved"][0][:2] == ["harbor-pine-handbook.pdf", 2])
     assert h["correct"] == ("25" in h["answer"] and not h["refused"])
+    assert (not h["fact_in_prompt"]) or h["fact_in_top_k"]  # a passage in the prompt was retrieved first
     s = result["summary"]
     assert s["answerable"] == 2 and s["unanswerable"] == 1
     assert s["hit_at_k"] == sum(rows[i]["hit_at_k"] for i in ("H04", "K03"))
+    assert s["fact_in_top_k"] == sum(rows[i]["fact_in_top_k"] for i in ("H04", "K03"))
+    assert s["fact_in_prompt"] == sum(rows[i]["fact_in_prompt"] for i in ("H04", "K03"))
     assert s["correctly_refused"] + len(s["wrongly_answered"]) == 1
     json.dumps(result)  # the whole result can be written as JSON
 

@@ -12,7 +12,9 @@ from dataclasses import replace
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from loadgate import wait_between  # noqa: E402
 from local_rag.ask import retrieve  # noqa: E402
 from local_rag.config import load_config  # noqa: E402
 from local_rag.embed import get_embedder  # noqa: E402
@@ -43,6 +45,7 @@ UNANSWERABLE = [
 
 def main() -> int:
     docs = sys.argv[1] if len(sys.argv) > 1 else "samples/pdfs"
+    wait_between("calibrating")  # a small job, usually run right after another one: the looser limits
     with tempfile.TemporaryDirectory(prefix="lrk-calibrate-") as tmp:
         cfg = replace(load_config(), store_dir=tmp)
         ingest([docs], cfg)

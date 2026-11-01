@@ -5,7 +5,8 @@
     python scripts/run_eval.py --only H01,K03 --no-write
 
 What is measured, separately (a miss in one does not hide behind the other):
-  retrieval   is the right file AND page among the retrieved passages (hit@k) / is it the best passage (hit@1)
+  retrieval   is the right file AND page among the retrieved passages (hit@k) / is it the best passage (hit@1);
+              also, stricter: does a retrieved (or a prompted) passage contain the accepted string at all
   answer      does the answer contain one of the expected strings (case-insensitive substring) -- it cannot judge paraphrases
   citation    does the answer cite the right file and page
   refusal     unanswerable questions: refused (below the threshold or declined by the model) is right, answered is a wrong answer
@@ -80,6 +81,9 @@ def run(cfg: Config, only: set[str] | None, gate: bool, log=print, start_gate: s
                         hit_at_k=want in got, hit_at_1=bool(got) and got[0] == want,
                         correct=any(norm(e) in norm(r.answer) for e in q["expected"]) and not r.refused,
                         cited_right=want in [tuple(c) for c in r.citations],
+                        # stricter than the page: does a retrieved / a prompted passage actually contain the fact?
+                        fact_in_top_k=any(norm(e) in norm(h.text) for h in r.hits for e in q["expected"]),
+                        fact_in_prompt=any(norm(e) in norm(h.text) for h in r.kept for e in q["expected"]),
                     )
                 else:
                     row["wrongly_answered"] = not r.refused
@@ -100,6 +104,10 @@ def run(cfg: Config, only: set[str] | None, gate: bool, log=print, start_gate: s
         "correct": sum(r["correct"] for r in ans),
         "correct_and_cited_right": sum(r["correct"] and r["cited_right"] for r in ans),
         "correct_given_hit": sum(r["correct"] for r in ans if r["hit_at_k"]),
+        "fact_in_top_k": sum(r["fact_in_top_k"] for r in ans),
+        "fact_in_prompt": sum(r["fact_in_prompt"] for r in ans),
+        "asked_with_fact_in_prompt": sum(1 for r in ans if r["fact_in_prompt"]),
+        "wrong_although_fact_in_prompt": [r["id"] for r in ans if r["fact_in_prompt"] and not r["correct"]],
         "hit_but_wrong": [r["id"] for r in ans if r["hit_at_k"] and not r["correct"]],
         "miss_but_correct": [r["id"] for r in ans if not r["hit_at_k"] and r["correct"]],
         "false_refusals": [r["id"] for r in ans if r["refused"]],
