@@ -131,9 +131,9 @@ RAW = [
      'if cfg.on_overflow == "refuse":', "if False:"),
     ("ask-overflow-silent", "prompt assembly", "local_rag/ask.py", "dropped passages are not reported",
      "    if prompt.dropped:", "    if False:"),
-    ("ask-truncation-at-limit-missed", "prompt assembly", "local_rag/ask.py", "a server reporting the window size is not flagged",
+    ("ask-cut-prompt-at-limit-missed", "prompt assembly", "local_rag/ask.py", "a server reporting the window size is not flagged",
      "reply.prompt_tokens >= cfg.num_ctx - 8 or ", ""),
-    ("ask-truncation-ratio-missed", "prompt assembly", "local_rag/ask.py", "a server reading far fewer tokens than the prompt has is not flagged",
+    ("ask-cut-prompt-ratio-missed", "prompt assembly", "local_rag/ask.py", "a server reading far fewer tokens than the prompt has is not flagged",
      " or chars / reply.prompt_tokens > MAX_PLAUSIBLE_CHARS_PER_TOKEN", ""),
     # ---- configuration -------------------------------------------------------------------------------------------
     ("config-flag-below-env", "config", "local_rag/config.py", "a command line flag no longer beats the environment",
