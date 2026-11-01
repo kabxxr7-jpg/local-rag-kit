@@ -76,6 +76,18 @@ def test_two_columns_interleave_in_plain_and_layout_but_not_in_columns_mode():
     assert "Standard delivery takes 3 to\n5 working days." in columns
 
 
+def test_columns_mode_splits_at_the_middle_of_the_page_not_somewhere_else(tmp_path):
+    path = tmp_path / "split.pdf"
+    c = canvas.Canvas(str(path), pagesize=(600, 400))
+    c.drawString(100, 200, "far left")
+    c.drawString(240, 300, "just left of the middle")  # starts at 40 percent of the width
+    c.drawString(360, 300, "just right of the middle")  # starts at 60 percent
+    c.drawString(500, 200, "far right")
+    c.save()
+    text = extract_pdf(path, "columns").pages[0].text
+    assert text == "just left of the middle\nfar left\n\njust right of the middle\nfar right"
+
+
 def test_ligatures_and_hyphenation_are_repaired_by_extract():
     text = extract_pdf(SCENARIO_PDFS / "office-notes-ligatures.pdf").pages[0].text
     assert "first Monday of every month" in text and "office" in text and "staircase" in text and "cupboard" in text and "reception desk" in text

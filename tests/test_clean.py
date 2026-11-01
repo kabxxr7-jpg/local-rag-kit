@@ -37,6 +37,13 @@ def test_blank_lines_collapse_to_one_and_ends_are_stripped():
     assert clean_text("\n\n  a\n\n\n\n\nb  \n\n") == "a\n\nb"
 
 
+def test_three_and_four_newlines_already_collapse_to_one_blank_line():
+    assert clean_text("a\nb") == "a\nb"
+    assert clean_text("a\n\nb") == "a\n\nb"
+    assert clean_text("a\n\n\nb") == "a\n\nb"
+    assert clean_text("a\n\n\n\nb") == "a\n\nb"
+
+
 def test_windows_and_old_mac_line_endings():
     assert clean_text("a\r\nb\rc") == "a\nb\nc"
 

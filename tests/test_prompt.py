@@ -91,3 +91,22 @@ def test_estimate_uses_the_configured_ratio():
     roomy = assemble("q?", hits, Config(num_ctx=1000, num_predict=100, chars_per_token=4.0))
     assert tight is None and roomy is not None
     assert roomy.est_tokens == estimate_tokens(roomy.system, 4.0) + estimate_tokens(roomy.user, 4.0)
+
+
+def test_render_includes_every_passage_it_is_given():
+    hits = [hit(n, 0.9, f"text {n}") for n in range(1, 7)]
+    text = render("Q?", hits)
+    for n in range(1, 7):
+        assert f"[{n}] (a.pdf, page 1)\ntext {n}" in text
+
+
+def test_a_prompt_exactly_as_long_as_the_budget_fits_and_one_token_less_does_not():
+    hits = [hit(1, 0.9, "x" * 50), hit(2, 0.8, "y" * 50)]
+    base = Config(chars_per_token=1.0, num_predict=100)  # one character is one token, so the estimate can be matched exactly
+    need = len(SYSTEM) + len(render("Q?", hits))
+    exact = replace(base, num_ctx=need + base.num_predict + TEMPLATE_RESERVE_TOKENS)
+    fits = assemble("Q?", hits, exact)
+    assert fits is not None and not fits.dropped
+    assert fits.est_tokens == fits.budget_tokens == need
+    tight = assemble("Q?", hits, replace(exact, num_ctx=exact.num_ctx - 1))
+    assert tight is not None and [h.chunk_id for h in tight.dropped] == ["id2"]
