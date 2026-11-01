@@ -20,6 +20,10 @@ SYSTEM = (
     "Keep the answer short. Do not use any knowledge outside the passages."
 )
 
+# English prose is about 4 characters per token on the models used here (measured, docs/REAL-RUNS.md). A server that reports
+# far fewer prompt tokens than the prompt has characters for 5.5 characters each has not read the whole prompt.
+MAX_PLAUSIBLE_CHARS_PER_TOKEN = 5.5
+
 # room for the chat template's role markers and the "Question:" scaffolding the estimate does not see
 TEMPLATE_RESERVE_TOKENS = 64
 

@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from .config import Config
 from .embed import Embedder, get_embedder
 from .llm import LLM, get_llm
-from .prompt import REFUSAL_TEXT, assemble, token_budget
+from .prompt import MAX_PLAUSIBLE_CHARS_PER_TOKEN, REFUSAL_TEXT, assemble, token_budget
 from .store import Hit, VectorStore
 
 
@@ -53,7 +53,8 @@ def ask(question: str, cfg: Config, *, store: VectorStore | None = None, embedde
     if best is None or best < cfg.min_score:
         return result
 
-    prompt = assemble(question, hits, cfg)
+    usable = [h for h in hits if h.score >= cfg.min_score]  # weak passages are noise: the model never sees them
+    prompt = assemble(question, usable, cfg)
     if prompt is None:
         result.reason = "context_too_large"
         result.warnings.append(
@@ -72,11 +73,13 @@ def ask(question: str, cfg: Config, *, store: VectorStore | None = None, embedde
     llm = llm or get_llm(cfg)
     reply = llm.generate(prompt.system, prompt.user)
     result.prompt_tokens = reply.prompt_tokens
-    if reply.prompt_tokens is not None and reply.prompt_tokens >= cfg.num_ctx - 8:
-        result.warnings.append(
-            f"The server reports {reply.prompt_tokens} prompt tokens, which is at the num_ctx limit ({cfg.num_ctx}): "
-            f"it has probably cut the prompt. Do not trust this answer."
-        )
+    if reply.prompt_tokens:
+        chars = len(prompt.system) + len(prompt.user)
+        if reply.prompt_tokens >= cfg.num_ctx - 8 or chars / reply.prompt_tokens > MAX_PLAUSIBLE_CHARS_PER_TOKEN:
+            result.warnings.append(
+                f"The server evaluated only {reply.prompt_tokens} tokens of a prompt of {chars} characters (num_ctx={cfg.num_ctx}): "
+                f"it has probably cut the prompt. Do not trust this answer."
+            )
 
     result.answer = reply.text
     if REFUSAL_TEXT.lower().rstrip(".") in reply.text.lower():

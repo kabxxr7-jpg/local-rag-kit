@@ -32,7 +32,7 @@ class Config:
     chunk_overlap: int = 80  # characters
     # asking
     k: int = 4
-    min_score: float = 0.55  # cosine similarity of the best chunk; below it the answer is the refusal text
+    min_score: float = 0.60  # cosine similarity of the best chunk; below it the answer is the refusal text
     num_ctx: int = 4096  # tokens the model server is asked to keep in memory
     num_predict: int = 256  # tokens reserved for the answer
     chars_per_token: float = 3.0  # deliberately pessimistic estimate used for the prompt size check

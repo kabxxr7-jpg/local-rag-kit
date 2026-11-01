@@ -61,14 +61,15 @@ class FakeLLM:
         context, _, tail = user.partition("\n\nQuestion:")
         question = tail.partition("\nAnswer:")[0]
         q = set(words(question))
-        best, best_score = "", 0
+        best, best_key = "", (0, 0)
         for sentence in re.split(r"(?<=[.!?])\s+|\n+", context):
             s = sentence.strip()
-            if not s or s.startswith("[") and s.endswith(")"):
+            if len(s) < 25 or (s.startswith("[") and s.endswith(")")):
                 continue
-            score = len(q & set(words(s)))
-            if score > best_score:
-                best, best_score = s, score
+            key = (len(q & set(words(s))), len(s))
+            if key > best_key:
+                best, best_key = s, key
+        best_score = best_key[0]
         if best_score == 0:
             from .prompt import REFUSAL_TEXT
 
