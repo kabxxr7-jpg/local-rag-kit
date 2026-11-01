@@ -25,7 +25,8 @@ class OllamaEmbedder:
         self._host = cfg.ollama_host
         self._doc_prefix = cfg.embed_doc_prefix
         self._query_prefix = cfg.embed_query_prefix
-        self._inner = OllamaEmbeddings(model=cfg.embed_model, base_url=cfg.ollama_host, client_kwargs={"timeout": cfg.request_timeout})
+        extra = {"dimensions": cfg.embed_dimensions} if cfg.embed_dimensions > 0 else {}
+        self._inner = OllamaEmbeddings(model=cfg.embed_model, base_url=cfg.ollama_host, client_kwargs={"timeout": cfg.request_timeout}, **extra)
 
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
         out: list[list[float]] = []

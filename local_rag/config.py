@@ -40,6 +40,7 @@ class Config:
     # embedding model specifics (nomic-embed-text wants these prefixes; set both to "" for models that do not)
     embed_doc_prefix: str = "search_document: "
     embed_query_prefix: str = "search_query: "
+    embed_dimensions: int = 0  # 0 = the model's own size; a positive number asks Ollama for shorter vectors (models that support it)
     fake_dim: int = 256
 
 
@@ -87,6 +88,8 @@ def validate(cfg: Config) -> Config:
         raise ConfigError(f"num_predict ({cfg.num_predict}) must be at least 1 and smaller than num_ctx ({cfg.num_ctx}).")
     if cfg.chars_per_token <= 0:
         raise ConfigError(f"chars_per_token is {cfg.chars_per_token}; it must be greater than 0.")
+    if cfg.embed_dimensions < 0:
+        raise ConfigError(f"embed_dimensions is {cfg.embed_dimensions}; use 0 for the model's own size or a positive number.")
     if cfg.fake_dim < 8:
         raise ConfigError(f"fake_dim is {cfg.fake_dim}; it must be at least 8.")
     return cfg

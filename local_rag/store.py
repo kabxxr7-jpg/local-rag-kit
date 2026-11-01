@@ -110,7 +110,7 @@ class VectorStore:
         if dim is not None and dim != self.dim:
             raise StoreMismatch(
                 f"The store holds {self.dim}-dimensional vectors but the embedding model '{embed_model}' now returns {dim}-dimensional ones "
-                f"(the model was probably replaced by another build under the same name). Rebuild the store: python -m local_rag ingest --rebuild <pdfs>"
+                f"(embed_dimensions was changed, or the model behind that name is another build). Set it back, or rebuild the store: python -m local_rag ingest --rebuild <pdfs>"
             )
 
     # ---- write --------------------------------------------------------------------------------------------------
