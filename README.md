@@ -4,7 +4,7 @@ Ask questions about PDFs using only local models (Ollama: `llama3.2:1b` for answ
 It is a small, readable RAG pipeline (pypdf, LangChain text splitter and Ollama clients, a faiss index) built to be debugged: every stage can be
 inspected, and the usual reasons a RAG pipeline "works but answers badly" each have a check, a message in plain words, or a test.
 
-**Status:** working and measured on one machine only (Apple M1, 8 GB, macOS, Ollama 0.40.13) on 2026-11-01: built on Python 3.11, then checked again from a fresh clone on Python 3.14, which gave the same eval numbers. 220 offline tests pass (fresh clone, 76 s) and 13 live tests pass against the real Ollama. On a 39-question eval about fictional documents the right page is retrieved for 29 of 30 answerable questions but the 1B model answers only 20 of 30 correctly (details and every wrong answer in `docs/EVAL.md`). The mutation check caught 68 of 72 planted bugs on its first run and 72 of 72 after four tests were added for the survivors. The GitHub Actions file in `.github/workflows/ci.yml` has never run. The live suite and the other heavy scripts start only when the load average is below 6 and at least 35 percent of the memory is free (they do not look at swap), and they stop waiting after 20 minutes; the 13 live tests passed on the finished repository under that rule at 15:21 on 2026-11-01. Read "What this does not prove" before relying on any of it.
+**Status:** working and measured on one machine only (Apple M1, 8 GB, macOS, Ollama 0.40.13) on 2026-11-01: built on Python 3.11, then checked again from a fresh clone on Python 3.14, which gave the same eval numbers. 220 offline tests pass (fresh clone, 76 s) and 13 live tests pass against the real Ollama. On a 39-question eval about fictional documents the right page is retrieved for 29 of 30 answerable questions but the 1B model answers only 20 of 30 correctly (details and every wrong answer in `docs/EVAL.md`). The mutation check caught 68 of 72 planted bugs on its first run and 72 of 72 after four tests were added for the survivors. The GitHub Actions file in `.github/workflows/ci.yml` ran once on GitHub's Ubuntu runners (Python 3.11, 2026-11-01) and passed: 220 offline tests, the 72-mutant check and the runner self test. CI does not run the live suite or the eval. The live suite and the other heavy scripts start only when the load average is below 6 and at least 35 percent of the memory is free (they do not look at swap), and they stop waiting after 20 minutes; the 13 live tests passed on the finished repository under that rule at 15:21 on 2026-11-01. Read "What this does not prove" before relying on any of it.
 
 ## Quick start
 
@@ -118,7 +118,7 @@ Each scenario's story, real output, fixes and wrong fixes are in `docs/SCENARIOS
 - **No GPU tuning, no speed claims beyond the timings written down.** One Apple M1 with 8 GB of memory that was busy with other work; the timings in `docs/REAL-RUNS.md` are what that machine did, not a benchmark.
 - **No OCR.** Scanned PDFs are detected and refused, not read.
 - **No scale.** The largest index here is a few dozen chunks. Nothing was tried with thousands of pages, concurrent users or an index that does not fit in memory (the index is a flat faiss index: exact, and linear in the number of chunks).
-- **No production use.** There is no authentication, no multi-user handling, no upgrade path for the store format, no monitoring. The CI file has never run.
+- **No production use.** There is no authentication, no multi-user handling, no upgrade path for the store format, no monitoring. CI runs the offline checks only, on one Linux image and one Python version.
 - **No accuracy claim beyond the measured eval.** The eval is 30 answerable and 9 unanswerable questions about three fictional documents, scored by substring. Its numbers say how this setup did on those questions, not how it will do on yours.
 - **The 1B model is weak.** Some of its answers in the eval are wrong, and they are listed in `docs/EVAL.md` next to the right ones.
 - **The scenarios are staged.** The broken states were made by hand on purpose, and the checks were written knowing the fixes. They show a method (a check that fails on the broken state, passes on every real fix and refuses the tempting wrong fixes). They do not show that real inherited code breaks in these ways.
@@ -159,7 +159,7 @@ eval/questions.json   the 39 eval questions (written before the first eval run)
 scripts/              eval, mutation check (+ mutants), calibration probe, load gate, process helper
 tests/                offline tests, the lab as tests, the live suite (marker `live`)
 docs/                 recorded real runs: SCENARIOS, REAL-RUNS, EVAL, MUTATION
-.github/workflows/    CI (offline checks only; has never run)
+.github/workflows/    CI (offline checks only; green on its first run, 2026-11-01)
 ```
 
 Licence: MIT.
