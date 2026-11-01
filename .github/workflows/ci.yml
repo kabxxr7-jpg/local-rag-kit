@@ -1,0 +1,27 @@
+# Offline checks only: no Ollama, no models, no network calls to a model server.
+# The live suite (pytest -m live), the eval and the full mutation run need a local Ollama and are run by hand.
+# STATUS: this file has never run. It was written next to the code, not tested on GitHub's runners.
+name: offline-checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install the pinned requirements
+        run: pip install -r requirements.txt
+      - name: Offline tests (fake embedder and fake model; the live suite is excluded by pytest.ini)
+        run: python -m pytest -q
+      - name: Mutants still apply exactly once
+        run: python scripts/mutation_check.py --validate
+      - name: Mutation runner self test (planted hang, planted survivor, nothing left running)
+        run: python scripts/mutation_check.py --selftest
