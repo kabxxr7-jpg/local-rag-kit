@@ -27,7 +27,7 @@ from local_rag.store import VectorStore
 from .conftest import ROOT, SAMPLES
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from loadgate import Overloaded, wait_for_calm  # noqa: E402
+from loadgate import Overloaded, wait_between, wait_for_calm  # noqa: E402
 
 pytestmark = pytest.mark.live
 
@@ -40,10 +40,18 @@ def note(kind: str, **data) -> None:
         fh.write(json.dumps({"kind": kind, "at": time.strftime("%Y-%m-%d %H:%M:%S"), **data}, ensure_ascii=False) + "\n")
 
 
-@pytest.fixture(autouse=True)
-def calm_machine():
+@pytest.fixture(scope="session", autouse=True)
+def calm_machine_at_start():
     try:
-        wait_for_calm("a live test")
+        wait_for_calm("the live suite")
+    except Overloaded as exc:
+        pytest.fail(f"the machine stayed too busy to start the live suite: {exc}")
+
+
+@pytest.fixture(autouse=True)
+def calm_machine_between_tests():
+    try:
+        wait_between("a live test")
     except Overloaded as exc:
         pytest.fail(f"the machine stayed too busy to run a live test: {exc}")
 

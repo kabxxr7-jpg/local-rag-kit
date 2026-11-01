@@ -176,3 +176,19 @@ def test_load_gate_lets_a_calm_machine_through():
 
 def test_load_gate_limits_are_the_ones_that_were_asked_for():
     assert loadgate.MAX_LOAD == 6.0 and loadgate.MAX_SWAP_MB == 4000.0 and loadgate.MAX_WAIT_MINUTES == 20
+
+
+def test_between_items_the_gate_is_looser_than_at_the_start_but_still_a_limit():
+    assert loadgate.BETWEEN_MAX_LOAD > loadgate.MAX_LOAD and loadgate.BETWEEN_MAX_SWAP_MB > loadgate.MAX_SWAP_MB
+    seen = {}
+
+    def fake_wait(label, max_load, max_swap_mb, poll, max_wait_minutes):
+        seen.update(load=max_load, swap=max_swap_mb)
+
+    original = loadgate.wait_for_calm
+    loadgate.wait_for_calm = fake_wait
+    try:
+        loadgate.wait_between("a test")
+    finally:
+        loadgate.wait_for_calm = original
+    assert seen == {"load": loadgate.BETWEEN_MAX_LOAD, "swap": loadgate.BETWEEN_MAX_SWAP_MB}

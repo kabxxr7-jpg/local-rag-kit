@@ -10,7 +10,7 @@ What is measured, separately (a miss in one does not hide behind the other):
   citation    does the answer cite the right file and page
   refusal     unanswerable questions: refused (below the threshold or declined by the model) is right, answered is a wrong answer
 
-One request at a time; waits for a calm machine before every question (load gate).
+One request at a time; strict load gate before the job, a looser pause (scripts/loadgate.py) before each question.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from loadgate import wait_for_calm  # noqa: E402
+from loadgate import wait_between, wait_for_calm  # noqa: E402
 from local_rag import __version__  # noqa: E402
 from local_rag.ask import ask  # noqa: E402
 from local_rag.config import Config, load_config  # noqa: E402
@@ -62,7 +62,7 @@ def run(cfg: Config, only: set[str] | None, gate: bool, log=print) -> dict:
                 if only and q["id"] not in only:
                     continue
                 if gate:
-                    wait_for_calm(f"question {q['id']}")
+                    wait_between(f"question {q['id']}")
                 t0 = time.time()
                 r = ask(q["q"], cfg, store=store, embedder=embedder, llm=llm)
                 seconds = round(time.time() - t0, 1)

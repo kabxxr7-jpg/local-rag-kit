@@ -13,7 +13,7 @@ Rules this runner keeps (each one has a reason, see docs/MUTATION.md):
   * every pytest run is a process group of its own; on timeout the whole group gets SIGKILL and is reaped
   * a timeout is NOT a kill: it is reported as "timeout" and the run exits with 2
   * a kill needs a named failing test that fails again when its file runs alone; otherwise the status is "unconfirmed" (not a kill)
-  * a load gate (load average < 6 and swap < 4000 MB) is checked before the baseline and before every mutant
+  * a load gate: the strict limits (load average < 6, swap < 4000 MB) before the baseline, a looser pause (load < 10, swap < 5500 MB) before each mutant
   * the unmutated copy must be green first, otherwise nothing is reported
 
 Exit codes: 0 every mutant killed, 1 survivors or unconfirmed kills, 2 the run itself is not trustworthy (timeout, error, invalid mutant, baseline red, machine too busy).
@@ -39,7 +39,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(HERE))
 
-from loadgate import Overloaded, wait_for_calm  # noqa: E402
+from loadgate import Overloaded, wait_between, wait_for_calm  # noqa: E402
 from procutil import RunResult, run_group  # noqa: E402
 
 MIN_MUTANTS = 30
@@ -274,7 +274,7 @@ def run_campaign(src: Path, mutants: list[dict], *, pytest_args: list[str], time
         log(f"baseline: {base.ran} tests green in {base.rr.seconds:.1f} s on a copy in {tmp}")
         for n, m in enumerate(mutants, 1):
             if gate:
-                wait_for_calm(f"mutant {m['id']}")
+                wait_between(f"mutant {m['id']}")
             target = work / m["file"]
             original = target.read_bytes()
             try:

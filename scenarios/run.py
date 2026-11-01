@@ -51,9 +51,13 @@ def main() -> int:
     if args.backend == "ollama" or not args.no_gate:
         import loadgate
 
+        started = []
+
         def gate(label: str) -> None:  # noqa: F811
+            # strict limits before the first phase (the job starts), the looser pause between phases (see scripts/loadgate.py)
             if args.backend == "ollama":
-                loadgate.wait_for_calm(label)
+                (loadgate.wait_between if started else loadgate.wait_for_calm)(label)
+                started.append(label)
 
     outcomes = []
     for s in scenarios:
