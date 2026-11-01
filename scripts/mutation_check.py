@@ -255,7 +255,7 @@ def judge(m: dict, workdir: Path, junit: Path, pytest_args: list[str], timeout: 
     return res
 
 
-def run_campaign(src: Path, mutants: list[dict], *, pytest_args: list[str], timeout: float, gate: bool = True, log=print, keep: bool = False, label: str = "repo", tmp_parent: str | None = None) -> Campaign:
+def run_campaign(src: Path, mutants: list[dict], *, pytest_args: list[str], timeout: float, gate: bool = True, log=print, keep: bool = False, label: str = "repo", tmp_parent: str | None = None, start_gate: str = "strict") -> Campaign:
     camp = Campaign(label=label, started=time.strftime("%Y-%m-%d %H:%M:%S"))
     t0 = time.time()
     tmp = Path(tempfile.mkdtemp(prefix="mutation-", dir=tmp_parent))
@@ -264,7 +264,7 @@ def run_campaign(src: Path, mutants: list[dict], *, pytest_args: list[str], time
     try:
         shutil.copytree(src, work, ignore=shutil.ignore_patterns(*IGNORE))
         if gate:
-            wait_for_calm("the baseline run")
+            (wait_for_calm if start_gate == "strict" else wait_between)("the baseline run")
         base = run_pytest(work, junit, [], pytest_args, timeout * 2)
         camp.baseline_tests, camp.baseline_seconds = base.ran, round(base.rr.seconds, 2)
         if base.rr.timed_out or base.rr.returncode != 0 or base.rr.leftover:
@@ -440,6 +440,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--only", action="append", default=[], help="mutant ids, comma separated (repeatable)")
     ap.add_argument("--timeout", type=float, default=120.0, help="seconds per pytest run before the process group is killed (default 120)")
     ap.add_argument("--no-gate", action="store_true", help="skip the load gate (not for the real run)")
+    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and swap < 4000 MB before the baseline. between: the looser limits (directly after another job that passed the strict gate)")
     ap.add_argument("--keep", action="store_true", help="keep the temporary copy")
     ap.add_argument("--json", metavar="PATH", help="write the results as JSON")
     ap.add_argument("--markdown", metavar="PATH", help="write the results as a Markdown table")
@@ -474,7 +475,7 @@ def main(argv: list[str] | None = None) -> int:
         os.nice(10)
     except OSError:
         pass
-    camp = run_campaign(ROOT, mutants, pytest_args=REAL_PYTEST_ARGS, timeout=args.timeout, gate=not args.no_gate, keep=args.keep)
+    camp = run_campaign(ROOT, mutants, pytest_args=REAL_PYTEST_ARGS, timeout=args.timeout, gate=not args.no_gate, keep=args.keep, start_gate=args.start_gate)
     print()
     if camp.aborted:
         print("ABORTED:", camp.aborted)

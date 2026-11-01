@@ -32,6 +32,7 @@ def main() -> int:
     ap.add_argument("--record", action="store_true", help="write docs/scenarios from this run (use with --backend ollama)")
     ap.add_argument("--keep", action="store_true", help="keep .work/ folders")
     ap.add_argument("--no-gate", action="store_true", help="do not wait for a calm machine (fake backend only)")
+    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and swap < 4000 MB before the first phase. between: the looser limits (directly after another job that passed the strict gate)")
     args = ap.parse_args()
 
     scenarios = framework.load_scenarios()
@@ -56,7 +57,7 @@ def main() -> int:
         def gate(label: str) -> None:  # noqa: F811
             # strict limits before the first phase (the job starts), the looser pause between phases (see scripts/loadgate.py)
             if args.backend == "ollama":
-                (loadgate.wait_between if started else loadgate.wait_for_calm)(label)
+                (loadgate.wait_between if started or args.start_gate == "between" else loadgate.wait_for_calm)(label)
                 started.append(label)
 
     outcomes = []

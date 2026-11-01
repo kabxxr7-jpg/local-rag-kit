@@ -44,13 +44,13 @@ def norm(text: str) -> str:
     return " ".join(text.lower().split())
 
 
-def run(cfg: Config, only: set[str] | None, gate: bool, log=print) -> dict:
+def run(cfg: Config, only: set[str] | None, gate: bool, log=print, start_gate: str = "strict") -> dict:
     questions = json.loads((ROOT / "eval" / "questions.json").read_text(encoding="utf-8"))
     rows = []
     with tempfile.TemporaryDirectory(prefix="lrk-eval-") as tmp:
         cfg = replace(cfg, store_dir=str(Path(tmp) / "store"))
         if gate:
-            wait_for_calm("ingesting for the eval")
+            (wait_for_calm if start_gate == "strict" else wait_between)("ingesting for the eval")
         started = time.time()
         report = ingest([ROOT / "samples" / "pdfs" / n for n in PDFS], cfg)
         ingest_seconds = round(time.time() - started, 1)
@@ -140,12 +140,13 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Evaluate retrieval, answers and refusals on eval/questions.json with the real Ollama models.")
     ap.add_argument("--only", help="comma separated question ids")
     ap.add_argument("--no-gate", action="store_true", help="skip the load gate")
+    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and swap < 4000 MB before starting. between: use the looser limits (when this job directly follows another one that passed the strict gate)")
     ap.add_argument("--no-write", action="store_true", help="print only, write no files")
     ap.add_argument("--out", default=str(ROOT / "docs" / "eval-results.json"))
     ap.add_argument("--table", default=str(ROOT / "docs" / "eval-table.md"))
     args = ap.parse_args(argv)
     only = set(args.only.split(",")) if args.only else None
-    result = run(load_config(), only, gate=not args.no_gate)
+    result = run(load_config(), only, gate=not args.no_gate, start_gate=args.start_gate)
     print(json.dumps(result["summary"], indent=1))
     if not args.no_write:
         Path(args.out).write_text(json.dumps(result, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
