@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.work/
+.mutation-*/
+.rag-store/
+*.egg-info/
+.env
+.DS_Store
+.live-observations.jsonl
