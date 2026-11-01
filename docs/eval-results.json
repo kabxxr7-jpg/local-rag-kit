@@ -1,0 +1,2115 @@
+{
+ "when": "2026-11-01 14:29:36",
+ "kit_version": "0.1.0",
+ "python": "3.11.14",
+ "ollama_server": "0.40.13",
+ "models": {
+  "embedding": "nomic-embed-text",
+  "llm": "llama3.2:1b"
+ },
+ "settings": {
+  "extract_mode": "layout",
+  "chunk_size": 500,
+  "chunk_overlap": 80,
+  "k": 4,
+  "min_score": 0.6,
+  "num_ctx": 4096,
+  "num_predict": 256,
+  "on_overflow": "trim"
+ },
+ "chunks": 24,
+ "ingest_seconds": 2.4,
+ "summary": {
+  "answerable": 30,
+  "hit_at_k": 29,
+  "hit_at_1": 27,
+  "correct": 20,
+  "correct_and_cited_right": 20,
+  "correct_given_hit": 20,
+  "fact_in_top_k": 30,
+  "fact_in_prompt": 27,
+  "asked_with_fact_in_prompt": 27,
+  "wrong_although_fact_in_prompt": [
+   "H02",
+   "H06",
+   "H09",
+   "H11",
+   "K01",
+   "P03",
+   "P04"
+  ],
+  "hit_but_wrong": [
+   "H02",
+   "H06",
+   "H09",
+   "H11",
+   "H12",
+   "K01",
+   "K07",
+   "P02",
+   "P04"
+  ],
+  "miss_but_correct": [],
+  "false_refusals": [
+   "H12",
+   "K07",
+   "P02"
+  ],
+  "unanswerable": 9,
+  "correctly_refused": 5,
+  "wrongly_answered": [
+   "U02",
+   "U03",
+   "U04",
+   "U08"
+  ],
+  "seconds_total": 31.2,
+  "seconds_median": 0.7
+ },
+ "rows": [
+  {
+   "id": "H01",
+   "kind": "answerable",
+   "question": "What are the core hours at Harbor & Pine Studio?",
+   "answer": "1. 10:00 to 15:00 Central European Time.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.78,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.78
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.72
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.689
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.68
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 480,
+   "seconds": 3.1,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 1,
+   "expected": [
+    "10:00"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H02",
+   "kind": "answerable",
+   "question": "How many days per week may staff work remotely?",
+   "answer": "2",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.895,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.895
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.71
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.705
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.664
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 503,
+   "seconds": 1.5,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 1,
+   "expected": [
+    "three days",
+    "3 days",
+    "up to three",
+    "up to 3"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H03",
+   "kind": "answerable",
+   "question": "On which day of the week are there no meetings?",
+   "answer": "There are no meetings on Wednesdays.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.626,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.626
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.596
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.561
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.561
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 217,
+   "seconds": 0.5,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 1,
+   "expected": [
+    "wednesday"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H04",
+   "kind": "answerable",
+   "question": "How many days of paid annual leave does each employee get per year?",
+   "answer": "25",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.843,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.843
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.72
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.694
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.661
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 552,
+   "seconds": 0.8,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 2,
+   "expected": [
+    "25"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H05",
+   "kind": "answerable",
+   "question": "How many unused leave days can be carried over to the next year?",
+   "answer": "Up to 5 unused days may be carried over and must be taken by 31 March of the following year; anything left after that date expires.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.788,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.788
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.725
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.662
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.644
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 512,
+   "seconds": 1.2,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 2,
+   "expected": [
+    "5 days",
+    "five days",
+    "up to 5",
+    "up to five",
+    "5 unused"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H06",
+   "kind": "answerable",
+   "question": "How many weeks of parental leave does the primary carer receive?",
+   "answer": "6 weeks",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.859,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.859
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.696
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.629
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.597
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 440,
+   "seconds": 0.6,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 2,
+   "expected": [
+    "18"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H07",
+   "kind": "answerable",
+   "question": "Within how many days must an expense claim be submitted?",
+   "answer": "30",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.801,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.801
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.642
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.631
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.626
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 563,
+   "seconds": 0.8,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 3,
+   "expected": [
+    "30"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H08",
+   "kind": "answerable",
+   "question": "What is the maximum hotel reimbursement per night when travelling?",
+   "answer": "8. Travel\nWhen travelling for work, meals are reimbursed up to 45 EUR per day and hotels up to 140 EUR per night.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.784,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.784
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.587
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.577
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.563
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 171,
+   "seconds": 1.1,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 3,
+   "expected": [
+    "140"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H09",
+   "kind": "answerable",
+   "question": "How much is the yearly learning budget per person?",
+   "answer": "Page 3 of 4",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.797,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.797
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.61
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.584
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.579
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 319,
+   "seconds": 0.5,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 3,
+   "expected": [
+    "800"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H10",
+   "kind": "answerable",
+   "question": "In which months do performance reviews take place?",
+   "answer": "May and November.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.748,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.748
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.573
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.553
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.55
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 229,
+   "seconds": 0.4,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 4,
+   "expected": [
+    "november"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H11",
+   "kind": "answerable",
+   "question": "How long is the probation period for new employees?",
+   "answer": "10",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.845,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.845
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.645
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.63
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.621
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 531,
+   "seconds": 0.7,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 4,
+   "expected": [
+    "3 months",
+    "three months"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "H12",
+   "kind": "answerable",
+   "question": "Who is the trust person for raising harassment concerns?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "below_threshold",
+   "best_score": 0.545,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.545
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.47
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.469
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.461
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": null,
+   "seconds": 0.0,
+   "expected_file": "harbor-pine-handbook.pdf",
+   "expected_page": 4,
+   "expected": [
+    "ines carvalho",
+    "carvalho"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": false,
+   "fact_in_top_k": true,
+   "fact_in_prompt": false
+  },
+  {
+   "id": "K01",
+   "kind": "answerable",
+   "question": "What is the maximum fill level of the Aurora AK-200?",
+   "answer": "1. The minimum fill level is 0.5 litres.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.802,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.802
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.716
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.676
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.652
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 587,
+   "seconds": 1.2,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 1,
+   "expected": [
+    "1.7"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K02",
+   "kind": "answerable",
+   "question": "What does the display show when the kettle is switched on without water?",
+   "answer": "E1: dry-boil protection has switched the kettle off.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.702,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.702
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.693
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.667
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.649
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 589,
+   "seconds": 1.2,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 1,
+   "expected": [
+    "e1"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K03",
+   "kind": "answerable",
+   "question": "Which temperature preset is for green tea?",
+   "answer": "80 degrees.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.758,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.758
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.611
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.609
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.59
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     2
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 445,
+   "seconds": 0.7,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 2,
+   "expected": [
+    "80"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K04",
+   "kind": "answerable",
+   "question": "For how long does the keep-warm function hold the temperature?",
+   "answer": "30 minutes",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.651,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.651
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.591
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.587
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.576
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 225,
+   "seconds": 0.2,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 2,
+   "expected": [
+    "30 minutes"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K05",
+   "kind": "answerable",
+   "question": "How do you activate the child lock?",
+   "answer": "To lock the controls, hold the preset button for 3 seconds until the lock symbol lights up.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.791,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.791
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.552
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.53
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.509
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 163,
+   "seconds": 0.8,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 2,
+   "expected": [
+    "3 seconds",
+    "three seconds"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K06",
+   "kind": "answerable",
+   "question": "How often should the kettle be descaled?",
+   "answer": "Every 4 weeks, or sooner when the ring light blinks amber.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.82,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.82
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.724
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.71
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.71
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     3
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 584,
+   "seconds": 1.3,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 3,
+   "expected": [
+    "4 weeks",
+    "four weeks"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K07",
+   "kind": "answerable",
+   "question": "What does error code E3 mean?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "below_threshold",
+   "best_score": 0.535,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.535
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.485
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.476
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.469
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": null,
+   "seconds": 0.0,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 3,
+   "expected": [
+    "sensor"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": false,
+   "fact_in_top_k": true,
+   "fact_in_prompt": false
+  },
+  {
+   "id": "K08",
+   "kind": "answerable",
+   "question": "How long is the warranty on the Aurora AK-200?",
+   "answer": "2 years",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.868,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.868
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.708
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.683
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.682
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     3
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 586,
+   "seconds": 0.9,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 3,
+   "expected": [
+    "2 years",
+    "two years"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K09",
+   "kind": "answerable",
+   "question": "What is the code for ordering a spare limescale filter?",
+   "answer": "AF-20",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.62,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.62
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.586
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.565
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.544
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     4
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 242,
+   "seconds": 0.4,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 4,
+   "expected": [
+    "af-20"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "K10",
+   "kind": "answerable",
+   "question": "How long is the mains cable of the kettle?",
+   "answer": "0.75 m",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.742,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.742
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.684
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.673
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.667
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     4
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 590,
+   "seconds": 0.7,
+   "expected_file": "aurora-kettle-manual.pdf",
+   "expected_page": 4,
+   "expected": [
+    "0.75"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P01",
+   "kind": "answerable",
+   "question": "How much does the Pro plan cost per month?",
+   "answer": "29",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.607,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     1,
+     0.607
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.599
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.527
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.517
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     1
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 252,
+   "seconds": 0.3,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 1,
+   "expected": [
+    "29"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P02",
+   "kind": "answerable",
+   "question": "How many users are included in the Business plan?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "below_threshold",
+   "best_score": 0.575,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.575
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.564
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.561
+    ],
+    [
+     "meridian-price-list.pdf",
+     1,
+     0.56
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": null,
+   "seconds": 0.0,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 1,
+   "expected": [
+    "50"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": false,
+   "correct": false,
+   "cited_right": false,
+   "fact_in_top_k": true,
+   "fact_in_prompt": false
+  },
+  {
+   "id": "P03",
+   "kind": "answerable",
+   "question": "How much discount do you get for paying a full year in advance?",
+   "answer": "You get 40 percent off the Plus plan.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.633,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.633
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.63
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.607
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.606
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 572,
+   "seconds": 1.1,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 1,
+   "expected": [
+    "15"
+   ],
+   "hit_at_k": false,
+   "hit_at_1": false,
+   "correct": false,
+   "cited_right": false,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P04",
+   "kind": "answerable",
+   "question": "How much does the priority support add-on cost per month?",
+   "answer": "9 EUR",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.717,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.717
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.678
+    ],
+    [
+     "meridian-price-list.pdf",
+     1,
+     0.627
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.615
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     2
+    ],
+    [
+     "meridian-price-list.pdf",
+     3
+    ],
+    [
+     "meridian-price-list.pdf",
+     1
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 571,
+   "seconds": 0.7,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 2,
+   "expected": [
+    "15"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": false,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P05",
+   "kind": "answerable",
+   "question": "Within how many days of a payment is a refund possible?",
+   "answer": "10 days",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.668,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.668
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.643
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.642
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.636
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ],
+    [
+     "meridian-price-list.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 569,
+   "seconds": 0.9,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 2,
+   "expected": [
+    "10 days"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": false,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P06",
+   "kind": "answerable",
+   "question": "What is the largest single file that can be uploaded?",
+   "answer": "50 GB",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.669,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.669
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.541
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.523
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.516
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 232,
+   "seconds": 0.3,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 3,
+   "expected": [
+    "50 gb"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P07",
+   "kind": "answerable",
+   "question": "How much is the service credit if the monthly uptime falls below 99.9 percent?",
+   "answer": "10 percent of that month's fee.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.68,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.68
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.63
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.587
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.585
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     3
+    ],
+    [
+     "meridian-price-list.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 366,
+   "seconds": 0.6,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 3,
+   "expected": [
+    "10 percent",
+    "10%"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "P08",
+   "kind": "answerable",
+   "question": "In which countries are the data centres located?",
+   "answer": "Finland and Ireland.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.636,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.636
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.587
+    ],
+    [
+     "meridian-price-list.pdf",
+     1,
+     0.579
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.561
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 230,
+   "seconds": 0.3,
+   "expected_file": "meridian-price-list.pdf",
+   "expected_page": 3,
+   "expected": [
+    "finland"
+   ],
+   "hit_at_k": true,
+   "hit_at_1": true,
+   "correct": true,
+   "cited_right": true,
+   "fact_in_top_k": true,
+   "fact_in_prompt": true
+  },
+  {
+   "id": "U01",
+   "kind": "unanswerable",
+   "question": "What is the capital of Portugal?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "below_threshold",
+   "best_score": 0.568,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.568
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.51
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.501
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.477
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": null,
+   "seconds": 0.0,
+   "wrongly_answered": false
+  },
+  {
+   "id": "U02",
+   "kind": "unanswerable",
+   "question": "How much does the Aurora AK-200 kettle cost?",
+   "answer": "[2] (aurora-kettle-manual.pdf, page 4)\nThe cost of the Aurora AK-200 kettle is not mentioned in the provided passages.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.774,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.774
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.77
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.746
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.728
+    ]
+   ],
+   "citations": [
+    [
+     "aurora-kettle-manual.pdf",
+     1
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 585,
+   "seconds": 1.3,
+   "wrongly_answered": true
+  },
+  {
+   "id": "U03",
+   "kind": "unanswerable",
+   "question": "What is the dress code at Harbor & Pine Studio?",
+   "answer": "[3] (harbor-pine-handbook.pdf, page 4)\nOnboarding, feedback and conduct\n\n10. Onboarding and probation\nEvery new employee is paired with a buddy for the first 6 weeks. The probation period lasts 3 months; during probation either side may end the contract with 1 week of notice. After probation the notice period is 2 months.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.756,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.756
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.673
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.645
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.607
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 488,
+   "seconds": 3.3,
+   "wrongly_answered": true
+  },
+  {
+   "id": "U04",
+   "kind": "unanswerable",
+   "question": "Does the Meridian Business plan include phone support?",
+   "answer": "No, the Meridian Business plan does not include phone support.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.666,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.666
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.665
+    ],
+    [
+     "meridian-price-list.pdf",
+     1,
+     0.651
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.551
+    ]
+   ],
+   "citations": [
+    [
+     "meridian-price-list.pdf",
+     2
+    ],
+    [
+     "meridian-price-list.pdf",
+     3
+    ],
+    [
+     "meridian-price-list.pdf",
+     1
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 508,
+   "seconds": 0.9,
+   "wrongly_answered": true
+  },
+  {
+   "id": "U05",
+   "kind": "unanswerable",
+   "question": "How many calories are in a cup of green tea?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "below_threshold",
+   "best_score": 0.587,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.587
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.535
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.53
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.514
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": null,
+   "seconds": 0.0,
+   "wrongly_answered": false
+  },
+  {
+   "id": "U06",
+   "kind": "unanswerable",
+   "question": "What is the name of the chief executive of Meridian Cloud Storage?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "model_declined",
+   "best_score": 0.704,
+   "retrieved": [
+    [
+     "meridian-price-list.pdf",
+     1,
+     0.704
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.692
+    ],
+    [
+     "meridian-price-list.pdf",
+     2,
+     0.673
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.491
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": 512,
+   "seconds": 1.2,
+   "wrongly_answered": false
+  },
+  {
+   "id": "U07",
+   "kind": "unanswerable",
+   "question": "Can the Aurora AK-200 be used on a gas stove?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "model_declined",
+   "best_score": 0.733,
+   "retrieved": [
+    [
+     "aurora-kettle-manual.pdf",
+     1,
+     0.733
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     4,
+     0.701
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.69
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     3,
+     0.69
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": 587,
+   "seconds": 0.9,
+   "wrongly_answered": false
+  },
+  {
+   "id": "U08",
+   "kind": "unanswerable",
+   "question": "What is the salary of a senior designer at Harbor & Pine Studio?",
+   "answer": "There is no information about the salary of a senior designer at Harbor & Pine Studio in the provided passages.",
+   "refused": false,
+   "reason": null,
+   "best_score": 0.687,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     1,
+     0.687
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.605
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.583
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     2,
+     0.578
+    ]
+   ],
+   "citations": [
+    [
+     "harbor-pine-handbook.pdf",
+     1
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3
+    ]
+   ],
+   "warnings": [],
+   "prompt_tokens": 278,
+   "seconds": 0.8,
+   "wrongly_answered": true
+  },
+  {
+   "id": "U09",
+   "kind": "unanswerable",
+   "question": "Who won the football world cup in 2018?",
+   "answer": "I could not find an answer to that in the ingested documents.",
+   "refused": true,
+   "reason": "below_threshold",
+   "best_score": 0.485,
+   "retrieved": [
+    [
+     "harbor-pine-handbook.pdf",
+     4,
+     0.485
+    ],
+    [
+     "aurora-kettle-manual.pdf",
+     2,
+     0.467
+    ],
+    [
+     "harbor-pine-handbook.pdf",
+     3,
+     0.46
+    ],
+    [
+     "meridian-price-list.pdf",
+     3,
+     0.458
+    ]
+   ],
+   "citations": [],
+   "warnings": [],
+   "prompt_tokens": null,
+   "seconds": 0.0,
+   "wrongly_answered": false
+  }
+ ]
+}
