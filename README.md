@@ -161,3 +161,5 @@ tests/                offline tests, the lab as tests, the live suite (marker `l
 docs/                 recorded real runs: SCENARIOS, REAL-RUNS, EVAL, MUTATION
 .github/workflows/    CI (offline checks only; has never run)
 ```
+
+Licence: MIT.
