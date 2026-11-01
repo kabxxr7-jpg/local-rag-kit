@@ -148,7 +148,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Evaluate retrieval, answers and refusals on eval/questions.json with the real Ollama models.")
     ap.add_argument("--only", help="comma separated question ids")
     ap.add_argument("--no-gate", action="store_true", help="skip the load gate")
-    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and at least 35% memory free before starting. between: use the looser limits (when this job directly follows another one that passed the strict gate)")
+    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and at least 35%% memory free before starting. between: use the looser limits (when this job directly follows another one that passed the strict gate)")
     ap.add_argument("--no-write", action="store_true", help="print only, write no files")
     ap.add_argument("--out", default=str(ROOT / "docs" / "eval-results.json"))
     ap.add_argument("--table", default=str(ROOT / "docs" / "eval-table.md"))

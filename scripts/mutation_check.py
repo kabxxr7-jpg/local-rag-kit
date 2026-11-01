@@ -440,7 +440,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--only", action="append", default=[], help="mutant ids, comma separated (repeatable)")
     ap.add_argument("--timeout", type=float, default=120.0, help="seconds per pytest run before the process group is killed (default 120)")
     ap.add_argument("--no-gate", action="store_true", help="skip the load gate (not for the real run)")
-    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and at least 35% memory free before the baseline. between: the looser limits (directly after another job that passed the strict gate)")
+    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and at least 35%% memory free before the baseline. between: the looser limits (directly after another job that passed the strict gate)")
     ap.add_argument("--keep", action="store_true", help="keep the temporary copy")
     ap.add_argument("--json", metavar="PATH", help="write the results as JSON")
     ap.add_argument("--markdown", metavar="PATH", help="write the results as a Markdown table")
