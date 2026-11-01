@@ -13,7 +13,7 @@ Rules this runner keeps (each one has a reason, see docs/MUTATION.md):
   * every pytest run is a process group of its own; on timeout the whole group gets SIGKILL and is reaped
   * a timeout is NOT a kill: it is reported as "timeout" and the run exits with 2
   * a kill needs a named failing test that fails again when its file runs alone; otherwise the status is "unconfirmed" (not a kill)
-  * a load gate: the strict limits (load average < 6, swap < 4000 MB) before the baseline, a looser pause (load < 10, swap < 5500 MB) before each mutant
+  * a load gate: the strict limits (load average < 6, at least 35 percent memory free) before the baseline, a looser pause (load < 10, 20 percent free) before each mutant
   * the unmutated copy must be green first, otherwise nothing is reported
 
 Exit codes: 0 every mutant killed, 1 survivors or unconfirmed kills, 2 the run itself is not trustworthy (timeout, error, invalid mutant, baseline red, machine too busy).
@@ -440,7 +440,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--only", action="append", default=[], help="mutant ids, comma separated (repeatable)")
     ap.add_argument("--timeout", type=float, default=120.0, help="seconds per pytest run before the process group is killed (default 120)")
     ap.add_argument("--no-gate", action="store_true", help="skip the load gate (not for the real run)")
-    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and swap < 4000 MB before the baseline. between: the looser limits (directly after another job that passed the strict gate)")
+    ap.add_argument("--start-gate", choices=["strict", "between"], default="strict", help="strict: load < 6 and at least 35% memory free before the baseline. between: the looser limits (directly after another job that passed the strict gate)")
     ap.add_argument("--keep", action="store_true", help="keep the temporary copy")
     ap.add_argument("--json", metavar="PATH", help="write the results as JSON")
     ap.add_argument("--markdown", metavar="PATH", help="write the results as a Markdown table")

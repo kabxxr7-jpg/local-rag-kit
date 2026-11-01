@@ -147,7 +147,7 @@ python scripts/mutation_check.py                  # the full mutation run (minut
 python samples/make_pdfs.py                       # regenerate the fictional PDFs (byte-identical)
 ```
 
-The heavy scripts wait for a calm machine first (`scripts/loadgate.py`: load average below 6 and swap below 4000 MB before they start, a looser pause between their items) because they were written for an 8 GB laptop that was doing other things. They give up after 20 minutes instead of running on a busy machine.
+The heavy scripts and the live suite wait for a calm machine first (`scripts/loadgate.py`: 1-minute load average below 6 and at least 35 percent of the memory free according to `memory_pressure`, a looser pause of load below 10 and 20 percent free between their items) because they were written for an 8 GB laptop that was doing other things. Swap used is deliberately not part of the rule: macOS keeps that figure high long after the pressure is gone. They give up after 20 minutes instead of running on a busy machine.
 
 ## Layout
 

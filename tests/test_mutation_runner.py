@@ -167,23 +167,55 @@ def test_run_group_cleans_up_when_the_caller_is_interrupted(monkeypatch):
 # ---- load gate ----------------------------------------------------------------------------------------------------------
 def test_load_gate_gives_up_instead_of_running_on_a_busy_machine():
     with pytest.raises(loadgate.Overloaded, match="giving up"):
-        loadgate.wait_for_calm("a test", max_load=0.0, max_swap_mb=1e9, poll=0.05, max_wait_minutes=0.002)
+        loadgate.wait_for_calm("a test", max_load=0.0, min_free_percent=0.0, poll=0.05, max_wait_minutes=0.002)
+
+
+def test_load_gate_gives_up_when_too_little_memory_is_free(monkeypatch):
+    monkeypatch.setattr(loadgate, "free_memory_percent", lambda: 10.0)
+    with pytest.raises(loadgate.Overloaded, match="free memory 10.0%"):
+        loadgate.wait_for_calm("a test", max_load=1e6, poll=0.05, max_wait_minutes=0.002)
 
 
 def test_load_gate_lets_a_calm_machine_through():
-    loadgate.wait_for_calm("a test", max_load=1e6, max_swap_mb=1e9, poll=0.05, max_wait_minutes=0.1)
+    loadgate.wait_for_calm("a test", max_load=1e6, min_free_percent=0.0, poll=0.05, max_wait_minutes=0.1)
+
+
+def test_load_gate_does_not_look_at_swap(monkeypatch):
+    """Swap used stays high on macOS long after the pressure is gone, so it is not part of the rule."""
+    calls = []
+    real = subprocess.run
+
+    def spy(argv, *a, **kw):
+        calls.append(argv[0])
+        return real(argv, *a, **kw)
+
+    monkeypatch.setattr(subprocess, "run", spy)
+    loadgate.calm()
+    assert "sysctl" not in calls
+    assert not hasattr(loadgate, "swap_used_mb")
+
+
+def test_free_memory_is_read_from_memory_pressure(monkeypatch):
+    class Out:
+        stdout = "The system has 8589934592 (524288 pages with a page size of 16384).\nSystem-wide memory free percentage: 43%\n"
+
+    monkeypatch.setattr(subprocess, "run", lambda *a, **kw: Out())
+    assert loadgate.free_memory_percent() == 43.0
+    Out.stdout = "nothing useful"
+    assert loadgate.free_memory_percent() is None
 
 
 def test_load_gate_limits_are_the_ones_that_were_asked_for():
-    assert loadgate.MAX_LOAD == 6.0 and loadgate.MAX_SWAP_MB == 4000.0 and loadgate.MAX_WAIT_MINUTES == 20
+    assert loadgate.MAX_LOAD == 6.0 and loadgate.MIN_FREE_PERCENT == 35.0 and loadgate.MAX_WAIT_MINUTES == 20
 
 
 def test_between_items_the_gate_is_looser_than_at_the_start_but_still_a_limit():
-    assert loadgate.BETWEEN_MAX_LOAD > loadgate.MAX_LOAD and loadgate.BETWEEN_MAX_SWAP_MB > loadgate.MAX_SWAP_MB
+    assert loadgate.BETWEEN_MAX_LOAD > loadgate.MAX_LOAD and loadgate.BETWEEN_MIN_FREE_PERCENT < loadgate.MIN_FREE_PERCENT
+    assert loadgate.BETWEEN_MIN_FREE_PERCENT > 0
     seen = {}
 
-    def fake_wait(label, max_load, max_swap_mb, poll, max_wait_minutes):
-        seen.update(load=max_load, swap=max_swap_mb)
+    def fake_wait(label, max_load, min_free_percent, poll, max_wait_minutes):
+        seen.update(load=max_load, free=min_free_percent)
 
     original = loadgate.wait_for_calm
     loadgate.wait_for_calm = fake_wait
@@ -191,4 +223,4 @@ def test_between_items_the_gate_is_looser_than_at_the_start_but_still_a_limit():
         loadgate.wait_between("a test")
     finally:
         loadgate.wait_for_calm = original
-    assert seen == {"load": loadgate.BETWEEN_MAX_LOAD, "swap": loadgate.BETWEEN_MAX_SWAP_MB}
+    assert seen == {"load": loadgate.BETWEEN_MAX_LOAD, "free": loadgate.BETWEEN_MIN_FREE_PERCENT}
