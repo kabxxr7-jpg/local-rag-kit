@@ -4,7 +4,7 @@ Ask questions about PDFs using only local models (Ollama: `llama3.2:1b` for answ
 It is a small, readable RAG pipeline (pypdf, LangChain text splitter and Ollama clients, a faiss index) built to be debugged: every stage can be
 inspected, and the usual reasons a RAG pipeline "works but answers badly" each have a check, a message in plain words, or a test.
 
-**Status:** working and measured on one machine only (Apple M1, 8 GB, macOS, Python 3.11, Ollama 0.40.13) on 2026-11-01. 217 offline tests pass (fresh clone, 70 s) and 13 live tests pass against the real Ollama. On a 39-question eval about fictional documents the right page is retrieved for 29 of 30 answerable questions but the 1B model answers only 20 of 30 correctly (details and every wrong answer in `docs/EVAL.md`). The mutation check caught 68 of 72 planted bugs on its first run and 72 of 72 after four tests were added for the survivors. The GitHub Actions file in `.github/workflows/ci.yml` has never run. The live suite and the other heavy scripts start only when the load average is below 6 and at least 35 percent of the memory is free (they do not look at swap), and they stop waiting after 20 minutes; the 13 live tests passed on the finished repository under that rule at 15:21 on 2026-11-01. Read "What this does not prove" before relying on any of it.
+**Status:** working and measured on one machine only (Apple M1, 8 GB, macOS, Ollama 0.40.13) on 2026-11-01: built on Python 3.11, then checked again from a fresh clone on Python 3.14, which gave the same eval numbers. 220 offline tests pass (fresh clone, 76 s) and 13 live tests pass against the real Ollama. On a 39-question eval about fictional documents the right page is retrieved for 29 of 30 answerable questions but the 1B model answers only 20 of 30 correctly (details and every wrong answer in `docs/EVAL.md`). The mutation check caught 68 of 72 planted bugs on its first run and 72 of 72 after four tests were added for the survivors. The GitHub Actions file in `.github/workflows/ci.yml` has never run. The live suite and the other heavy scripts start only when the load average is below 6 and at least 35 percent of the memory is free (they do not look at swap), and they stop waiting after 20 minutes; the 13 live tests passed on the finished repository under that rule at 15:21 on 2026-11-01. Read "What this does not prove" before relying on any of it.
 
 ## Quick start
 
@@ -101,7 +101,7 @@ Each scenario's story, real output, fixes and wrong fixes are in `docs/SCENARIOS
 
 | | |
 |---|---|
-| Offline tests (`python -m pytest`) | 217 (core 179, the ones the mutation check runs; tooling 29; lab 9), all passing in a fresh clone |
+| Offline tests (`python -m pytest`) | 220 (core 179, the ones the mutation check runs; tooling 32; lab 9), all passing in a fresh clone |
 | Live tests (`python -m pytest -m live`, needs Ollama) | 13, all passed on 2026-11-01 |
 | Eval, retrieval: right file and page in top 4 / is the best passage | 29 of 30 / 27 of 30 |
 | Eval, answer contains an accepted string | **20 of 30** |
