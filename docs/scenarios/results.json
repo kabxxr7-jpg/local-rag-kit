@@ -1,0 +1,166 @@
+[
+ {
+  "scenario": "stale-store-dim-mismatch",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "rebuild_the_store": true,
+   "revert_the_setting": true
+  },
+  "wrongs_refused": {
+   "reingest_without_rebuild": true,
+   "delete_meta_json": true,
+   "swallow_the_assertion": true,
+   "lower_the_threshold": true
+  }
+ },
+ {
+  "scenario": "duplicate-chunks",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "content_ids_replace_and_rebuild": true,
+   "content_ids_and_replace_only": true
+  },
+  "wrongs_refused": {
+   "rebuild_only": true,
+   "dedupe_when_answering": true,
+   "raise_k": true
+  }
+ },
+ {
+  "scenario": "chunk-size-unit-mistake",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "restore_the_defaults_and_ingest": true,
+   "set_600_100_and_ingest": true
+  },
+  "wrongs_refused": {
+   "raise_k": true,
+   "change_the_setting_but_do_not_ingest": true,
+   "add_overlap_only": true
+  }
+ },
+ {
+  "scenario": "extraction-ligatures-hyphens",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "restore_the_cleaner_and_rebuild": true
+  },
+  "wrongs_refused": {
+   "normalise_but_do_not_dehyphenate": true,
+   "dehyphenate_but_keep_ligatures": true,
+   "strip_non_ascii": true,
+   "fix_the_code_but_do_not_rebuild": true
+  }
+ },
+ {
+  "scenario": "two-columns-merged",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "read_the_page_column_by_column": true
+  },
+  "wrongs_refused": {
+   "layout_mode": true,
+   "bigger_chunks": true,
+   "retrieve_more": true
+  }
+ },
+ {
+  "scenario": "table-flattened",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "layout_extraction": true
+  },
+  "wrongs_refused": {
+   "columns_mode": true,
+   "bigger_chunks": true,
+   "retrieve_more": true
+  }
+ },
+ {
+  "scenario": "citations-wrong-page",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "split_page_by_page_and_rebuild": true
+  },
+  "wrongs_refused": {
+   "add_one_to_every_page": true,
+   "cite_the_last_page": true,
+   "fix_the_code_but_do_not_rebuild": true
+  }
+ },
+ {
+  "scenario": "prompt-assembly-drops-hit",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "keep_every_passage": true
+  },
+  "wrongs_refused": {
+   "raise_k": true,
+   "lower_the_threshold": true,
+   "rewrite_the_instructions": true
+  }
+ },
+ {
+  "scenario": "refusal-threshold",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "calibrated_threshold": true,
+   "calibrated_threshold_a_bit_higher": true
+  },
+  "wrongs_refused": {
+   "threshold_zero": true,
+   "threshold_a_bit_lower": true,
+   "retrieve_more": true,
+   "friendlier_refusal_text": true
+  }
+ },
+ {
+  "scenario": "context-truncated-num-ctx",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "restore_the_size_check": true,
+   "raise_num_ctx": true
+  },
+  "wrongs_refused": {
+   "put_the_best_passage_last": true,
+   "raise_num_predict": true,
+   "ten_passages_instead_of_twelve": true,
+   "shorter_instructions": true
+  }
+ },
+ {
+  "scenario": "model-not-pulled",
+  "ok": true,
+  "control_passes": true,
+  "broken_fails": true,
+  "fixes": {
+   "use_an_installed_model_and_translate_errors": true
+  },
+  "wrongs_refused": {
+   "translate_errors_only": true,
+   "change_the_model_only": true,
+   "catch_everything": true,
+   "point_at_another_host": true
+  }
+ }
+]
